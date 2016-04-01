@@ -10,20 +10,28 @@
 		var numOrderedCounter = 0;
 
 		function main(){
-			for(var i = 0; i < 2; i++){
+			for(var i = 0; i < 100000; i++){
 				var arr= createArray();
 				var permuted = permute(arr[1]);
+				permArr = [];
+  				usedChars = [];
 				// console.log(permuted);
+				//sorting dimensions of the box in acending order
 				arr[0]=arr[0].sort();
-				// console.log(arr[0]);
+
 				storagerow.push(arr[0]);
 				for(var j=0; j < permuted.length; j++){
+					//check how many times pen goes in
 					var z = packBoxOptimal(arr[0],permuted[j]);
 					storagerow.push([z,permuted[j]]);
 				}
 				storage.push(storagerow);
+				storagerow = [];
+				
+
 			}
 			console.log(storage);
+			
 			var iterations = stats(storage);
 			console.log("Number of times run: " + iterations + ", number of times our expected config worked: " + numOrderedCounter);
 		}
@@ -37,7 +45,6 @@
 					index = -1;
 				}
 				//finding index of greatest value
-				console.log(index);
 				for(var i = 1; i<7; i++){
 					//checking to see if the value found by index is the number of times possible in the current configuration
 					//if it is
