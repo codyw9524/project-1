@@ -13,6 +13,32 @@
 			var sorted = l * w * h;
 			debug(sorted);
 		}
+		
+		var l = 0;
+		var w = 0;
+		var h = 0;
+		var pl = 0;
+		var pw = 0;
+		var ph = 0;
+		var box = [];
+		var pencil = [];
+		function createArray(){
+			l = Math.floor(1000 * Math.random());
+			w = Math.floor(1000 * Math.random());
+			h = Math.floor(1000 * Math.random());
+			pl = Math.floor(1000 * Math.random());
+			pw = Math.floor(1000 * Math.random());
+			ph = Math.floor(1000 * Math.random());
+			box.push(l);
+			box.push(w);
+			box.push(h);
+			pencil.push(pl);
+			pencil.push(pw);
+			pencil.push(ph);
+			return [box, pencil];
+		}
+		var thing = createArray();
+		console.log("box: " + thing[0] + ", pencil: " + thing[1]);
 
 
 	</script>
