@@ -4,6 +4,21 @@
 
 	<title>Box Project</title>
 	<script>
+		
+
+		function main(){
+			for(var i = 0; i < 1; i++){
+				var arr= createArray();
+				var permuted = permute(arr[1]);
+				// console.log(permuted);
+				for(var j=0; j < permuted.length; j++){
+					var z = packBoxOptimal(arr[0],permuted[j]);
+					console.log(z);
+				}
+			}
+
+		}
+
 		function packBoxOptimal(box, pen){
 			// box.sort();
 			// pen.sort();
@@ -11,13 +26,14 @@
 			var w = Math.floor(box[1] / pen[1]);
 			var h = Math.floor(box[2] / pen[2]);
 			var sorted = l * w * h;
-			debug(sorted);
+			return sorted; //this needs to return the possible number of packed items for each permuatation
 		}
 
-		var permArr = [],
-  		usedChars = [];
+		var permArr = [];
+  		var usedChars = [];
 
-		function permute(input) {
+		function permute(input) {	
+		
 		  var i, ch;
 		  for (i = 0; i < input.length; i++) {
 		    ch = input.splice(i, 1)[0];
@@ -32,15 +48,16 @@
 		  return permArr
 		};
 
-		var l = 0;
-		var w = 0;
-		var h = 0;
-		var pl = 0;
-		var pw = 0;
-		var ph = 0;
-		var box = [];
-		var pencil = [];
+		
 		function createArray(){
+			var l = 0;
+			var w = 0;
+			var h = 0;
+			var pl = 0;
+			var pw = 0;
+			var ph = 0;
+			var box = [];
+			var pencil = [];
 			l = Math.floor(1000 * Math.random());
 			w = Math.floor(1000 * Math.random());
 			h = Math.floor(1000 * Math.random());
@@ -56,9 +73,9 @@
 			return [box, pencil];
 		}
 		var thing = createArray();
-		console.log("box: " + thing[0] + ", pencil: " + thing[1]);
+		// console.log("box: " + thing[0] + ", pencil: " + thing[1]);
 
-
+		main();
 	</script>
 </head>
 <body>
