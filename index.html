@@ -4,11 +4,15 @@
 
 	<title>Box Project</title>
 	<script>
-		function packBox(){
-			
+		function packBoxOptimal(box, pen){
+			// box.sort();
+			// pen.sort();
+			var l = Math.floor(box[0] / pen[0]);
+			var w = Math.floor(box[1] / pen[1]);
+			var h = Math.floor(box[2] / pen[2]);
+			var sorted = l * w * h;
+			debug(sorted);
 		}
-
-
 
 
 	</script>
