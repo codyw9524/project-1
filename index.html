@@ -11,16 +11,18 @@
 				var arr= createArray();
 				var permuted = permute(arr[1]);
 				// console.log(permuted);
+				arr[0]=arr[0].sort();
+				console.log(arr[0]);
 				for(var j=0; j < permuted.length; j++){
 					var z = packBoxOptimal(arr[0],permuted[j]);
-					console.log(z);
+					console.log(z + ' ' + permuted[j]);
 				}
 			}
 
 		}
 
 		function packBoxOptimal(box, pen){
-			// box.sort();
+			box.sort();
 			// pen.sort();
 			var l = Math.floor(box[0] / pen[0]);
 			var w = Math.floor(box[1] / pen[1]);
