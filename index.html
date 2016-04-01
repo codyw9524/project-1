@@ -5,6 +5,9 @@
 	<title>Box Project</title>
 	<script>
 		
+		var storagerow = [];
+		var storage = [];
+		var numOrderedCounter = 0;
 
 		function main(){
 			for(var i = 0; i < 1; i++){
@@ -12,17 +15,45 @@
 				var permuted = permute(arr[1]);
 				// console.log(permuted);
 				arr[0]=arr[0].sort();
-				console.log(arr[0]);
+				// console.log(arr[0]);
+				storagerow.push(arr[0]);
 				for(var j=0; j < permuted.length; j++){
 					var z = packBoxOptimal(arr[0],permuted[j]);
-					console.log(z + ' ' + permuted[j]);
+					storagerow.push([z,permuted[j]]);
+				}
+				storage.push(storagerow);
+			}
+			console.log(storage);
+			// var iterations = stats(storage);
+			// console.log("Number of times run: " + iterations + ", number of times our expected config worked: " + numOrderedCounter);
+		}
+
+		function stats(store){
+			for(var row = 0; row<store.length; row++){
+				//row is the row containing all information per box and pen iteration
+				//value of greatest number of pencils fitting in box
+				var index = Math.max(store[row][1][0], store[row][2][0], store[row][3][0], store[row][4][0], store[row][5][0], store[row][6][0]);
+				if(index == 0){
+					index = -1;
+				}
+				//finding index of greatest value
+				console.log(index);
+				for(var i = 1; i<7; i++){
+					//checking to see if the value found by index is the number of times possible in the current configuration
+					//if it is
+					if(store[row][i].indexOf(index) != -1){
+						//want to check relationship of the configuration with the configuration of the box
+						var preniy = store[row][i][1].sort();
+						if(store[row][i][1] == preniy){
+							numOrderedCounter++;
+						}
+					}
 				}
 			}
-
+			return row;
 		}
 
 		function packBoxOptimal(box, pen){
-			box.sort();
 			// pen.sort();
 			var l = Math.floor(box[0] / pen[0]);
 			var w = Math.floor(box[1] / pen[1]);
@@ -47,7 +78,16 @@
 		    input.splice(i, 0, ch);
 		    usedChars.pop();
 		  }
-		  return permArr
+		  //establishing our refrence array
+		  for(var j=0;j<permArr.length;j++){
+		  	//checking the whole array to see if there are any copies
+		  	for(var k = 0;k<permArr.length;k++){
+		  		if(j != k && permArr[j] == permArr[k]){
+		  			console.log("THIS IS A PROM");
+		  		}
+		  	}
+		  }
+		  return permArr;
 		};
 
 		
@@ -63,9 +103,10 @@
 			l = Math.floor(1000 * Math.random());
 			w = Math.floor(1000 * Math.random());
 			h = Math.floor(1000 * Math.random());
-			pl = Math.floor(100 * Math.random());
-			pw = Math.floor(100 * Math.random());
-			ph = Math.floor(100 * Math.random());
+			pl = Math.floor(100 * Math.random())+1;
+			pw = Math.floor(100 * Math.random())+1;
+			ph = Math.floor(100 * Math.random())+1;
+
 			box.push(l);
 			box.push(w);
 			box.push(h);
