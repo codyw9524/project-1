@@ -15,14 +15,20 @@
 
 			//creating the size of the empty box
 			//note that currently we only have one box, and that the box is of size 10x10
-			var corner1 = new Corner(0,0,10,10);
-			var corner2 = new Corner(10,0,10,10);
-			var corner3 = new Corner(10,10,10,10);
-			var corner4 = new Corner(0,10,10,10);
+			function createInitialCorners(width, height){
+				var corner1 = new Corner(0,0,width,height);
+				var corner2 = new Corner(width,0,width,height);
+				var corner3 = new Corner(width,height,width,height);
+				var corner4 = new Corner(0,height,width,height);
+				corners = [corner1, corner2, corner3, corner4]
+
+			}
+			
 
 			//corners is an array of Corner objects
-			var corners = [corner1, corner2, corner3, corner4];
-
+			var corners = [];
+			//we want to minimize lostSpace. that is the space that boxes are not occupying
+			var lostSpace = 9999999999;
 			//now lets put some boxes in the box
 
 			//here comes the logic
@@ -39,6 +45,7 @@
 				//best = [remain1, eachBox, [boxList[eachBox][0], boxList[eachBox][1]]]
 				//remain1 == remainder associated with the box
 				//eachBox == index of the box in boxList
+				//corner == index of the corner we want to put the box into
 				//[boxList[eachBox][0], boxList[eachBox][1]]] == the configuration of that box. note that the way the box is stored in boxList may not be the alignment needed to get the least remainder, so we have stored in here too
 				//setting default value of best = 9999 because any remainder will be better than that
 				var best = [9999];
@@ -65,10 +72,10 @@
 							//if the sum of the remainders in orientation1 (how it is configured in the array) is greater than the rotated orientation
 							if(remain1 >= remain2){
 								//then orientation1 is the one we want
-								best = [remain1, eachBox, [boxList[eachBox][0], boxList[eachBox][1]]];
+								best = [remain1, eachBox, corner, [boxList[eachBox][0], boxList[eachBox][1]]];
 							}
 							else{
-								best = [remain2, eachBox, [boxList[eachBox][1], boxList[eachBox][0]]];
+								best = [remain2, eachBox, corner, [boxList[eachBox][1], boxList[eachBox][0]]];
 							}
 						}
 
@@ -77,9 +84,29 @@
 
 				return best;
 			}
+			
+			function placeBox(box){
+				//all placing the box does is update corners and decreases the empty space
 
-			var thing  = findBestBox(corners, boxList);
-			console.log(thing);
+				//decreasing lostSpace (original area/volume of the main box) by the volume/area of the little box
+				lostSpace = lostSpace - (box[2][0]*box[2][1]);
+
+				//
+
+
+			}
+
+			function main(width, height){
+				createInitialCorners(width, height);
+				lostSpace = width * height;
+				//finding the best box to place
+				var box  = findBestBox(corners, boxList);
+				//now placing the box
+				//placeBox(box);
+				console.log(box);
+			}
+			
+			main(10,10);
 
 		</script>
 	</head>
