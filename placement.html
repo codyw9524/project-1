@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<script type="text/javascript">
+			//contstructor for new object type Corner
+			//takes in x coord, y coord, vertical space (to nearest block), horizontal space (to nearest block)
+			function Corner(x,y,v,h){
+				this.x = x;
+				this.y = y;
+				this.v = v;
+				this.h = h;
+			}
+
+			//creating the size of the empty box
+			//note that currently we only have one box, and that the box is of size 10x10
+			var corner1 = new Corner(0,0,10,10);
+			var corner2 = new Corner(10,0,10,10);
+			var corner3 = new Corner(10,10,10,10);
+			var corner4 = new Corner(0,10,10,10);
+
+			//corners is an array of Corner objects
+			var corners = [corner1, corner2, corner3, corner4];
+
+			//now lets put some boxes in the box
+
+			//here comes the logic
+			//boxes we want to put in the big box
+			var boxList = [[2,3],[3,4]];
+
+			//boxList.splice(1,1);
+			//splice removes whatever is in the array	
+
+
+
+			//note that the best var holds the following 
+			//best = [remain1, eachBox, [boxList[eachBox][0], boxList[eachBox][1]]]
+			//remain1 == remainder associated with the box
+			//eachBox == index of the box in boxList
+			//[boxList[eachBox][0], boxList[eachBox][1]]] == the configuration of that box. note that the way the box is stored in boxList may not be the alignment needed to get the least remainder, so we have stored in here too
+			//setting default value of best = 9999 because any remainder will be better than that
+			var best = [9999];
+			var remainders = [0,0,0,0];
+			var remain1 = 0;
+			var remain2 = 0;
+
+			//in the function below, eachBox returns the index of each element in the list
+			for(var eachBox in boxList){
+				//console.log(boxList[eachBox]);
+				//checking each box with the corner to see which one we should put in
+				for(var corner in corners){
+					//check the remainers 
+					//do it twice to check the two different orentations
+					remainders[0] = corners[corner].v%boxList[eachBox][0];
+					remainders[1] = corners[corner].h%boxList[eachBox][1];
+					remainders[2] = corners[corner].v%boxList[eachBox][1];
+					remainders[3] = corners[corner].h%boxList[eachBox][0];
+
+					remain1 = remainders[0] + remainders[1];
+					remain2 = remainders[2] + remainders[3];
+					//if one of the remainders produced by one of the configurations of the current box are less than the remaindes produced by one of the previous boxes
+					if(remain1 < best[0] || remain2 < best[0]){
+						//if the sum of the remainders in orientation1 (how it is configured in the array) is greater than the rotated orientation
+						if(remain1 >= remain2){
+							//then orientation1 is the one we want
+							best = [remain1, eachBox, [boxList[eachBox][0], boxList[eachBox][1]]];
+						}
+						else{
+							best = [remain2, eachBox, [boxList[eachBox][1], boxList[eachBox][0]]];
+						}
+					}
+
+				}
+			}
+
+			console.log(best);
+
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>
